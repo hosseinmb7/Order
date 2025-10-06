@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>سیستم سفارش‌گیری</title>
+<link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#2e7d32">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/persian-datepicker@1.2.0/dist/css/persian-datepicker.min.css">
+</head>
+<body>
+<div id="app">
+  <aside class="menu">
+    <h2>منو</h2>
+    <button onclick="showSection('orders')">🛒</button>
+    <button onclick="showSection('customers')">👥</button>
+    <button onclick="showSection('reports')">📊</button>
+    <button onclick="showSection('about')">ℹ️</button>
+  </aside>
+  <main class="content">
+    <section id="orders" class="section active">
+      <h2>سفارش‌گیری</h2>
+      <div class="card">
+        <label class="row"><span>تاریخ</span><input type="text" id="date" class="pdate" placeholder="----/--/--"></label>
+        <label class="row"><span>مشتری</span><select id="customerSelect"></select></label>
+        <label class="row"><span>تعداد</span><input type="number" id="quantity" min="1" max="200" value="1"></label>
+        <div class="actions">
+          <button id="saveOrder" class="btn primary">ثبت سفارش</button>
+          <div id="successIcon" class="success" aria-live="polite">✔️</div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:15px;">
+        <h3>سفارش‌های امروز</h3>
+        <div class="table-wrap">
+          <table id="todayOrders" class="report">
+            <thead>
+              <tr><th>مشتری</th><th>تعداد</th><th>عملیات</th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="customers" class="section">
+      <h2>تعریف اشخاص</h2>
+      <div class="card">
+        <div class="add-row">
+          <input type="text" id="newCustomer" placeholder="نام مشتری جدید">
+          <button id="addCustomer" class="btn">افزودن</button>
+        </div>
+        <ul id="customerList" class="list"></ul>
+      </div>
+    </section>
+
+    <section id="reports" class="section">
+      <h2>گزارش روزانه</h2>
+      <div class="card minimal">
+        <label class="row"><span>تاریخ</span><input type="text" id="reportDate" class="pdate" placeholder="----/--/--"></label>
+        <div class="actions">
+          <button id="generateReport" class="btn primary small">نمایش</button>
+          <button onclick="printReport()" class="btn small">چاپ</button>
+        </div>
+        <div class="table-wrap">
+          <table id="reportTable" class="report">
+            <thead><tr><th>مشتری</th><th>تعداد</th></tr></thead>
+            <tbody></tbody>
+            <tfoot></tfoot>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section">
+      <h2>درباره</h2>
+      <div class="card">
+        <p>طراحی و برنامه‌نویسی: حسین قصاب<br>نسخه 1.4 - 2025</p>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/persian-date/dist/persian-date.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/persian-datepicker@1.2.0/dist/js/persian-datepicker.min.js"></script>
+<script src="main.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js')
+    .then(() => console.log('Service Worker ثبت شد'))
+    .catch(err => console.log('Service Worker خطا:', err));
+}
+</script>
+</body>
+</html>
